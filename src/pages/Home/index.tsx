@@ -11,15 +11,13 @@ import {
   FlatList
 } from 'react-native';
 import { TaskList } from '../../components/TaskList';
-
-interface Task {
-  id: string;
-  title: string;
-}
+import { useTaskList } from '../../context/TaskContext';
 
 export default function Home() {
   const [newTask, setNewTask] = React.useState('');
-  const [tasks, setTasks] = React.useState<Task[]>([]);
+
+  const {addTask} = useTaskList();
+
 
   const handleAddNewTask = () => {
     const data = {
@@ -27,7 +25,7 @@ export default function Home() {
       title: newTask ? newTask : 'Task empty',
     };
 
-    setTasks([...tasks, data]);
+    addTask(data);
   }
 
   return (
@@ -47,7 +45,7 @@ export default function Home() {
 
         <Text style={styles.titleTasks}>Minhas Tarefas</Text>
 
-        <TaskList tasks={tasks} />
+        <TaskList />
       </View>
     </SafeAreaView>
   );
